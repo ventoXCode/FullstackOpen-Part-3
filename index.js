@@ -29,6 +29,10 @@ app.get("/api/notes/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
 
@@ -71,6 +75,8 @@ app.get("/api/persons", (request, response) => {
     response.json(persons);
   });
 });
+
+app.use(unknownEndpoint);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
